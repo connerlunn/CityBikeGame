@@ -22,55 +22,57 @@ function preload ()
     this.load.image('biker', './assets/sprites/bikerv1.png')
 }
 
+
+var leftArrowKey;
+var upArrowKey;
+var rightArrowKey;
+var angleRateOfChange = 0;
+
+var biker;
+var graphics;
+var text;
+var previousX;
+var previousY;
+
 function create ()
 {
-    var biker = this.physics.add.image(200, 200, 'biker');
-    var text = this.add.text(0, 0, '', { font: '"Arial"' });
-    var graphics = this.add.graphics({ lineStyle: { width: 4, color: 0xaa00aa } });
+    leftArrowKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
+    upArrowKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
+    rightArrowKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
 
+
+    biker = this.physics.add.image(200, 200, 'biker');
     biker.setCollideWorldBounds(true);
 
-    var angleRateOfChange = 0;
-    var previousX = biker.x;
-    var previousY = biker.y;
+    text = this.add.text(0, 0, '', { font: '"Arial"' });
+    graphics = this.add.graphics({ lineStyle: { width: 4, color: 0xaa00aa } });
+
+    previousX = biker.x;
+    previousY = biker.y;
 
     this.input.keyboard.on('keyup', function (event) {
 
         text.text = "Angle: " + Math.round(biker.angle) + "   // AngleRateOfChange: " + angleRateOfChange;
 
 
-
-        if (event.keyCode === 37)
-        {
+        /*
+        if (event.keyCode === 37) {
             //  left
             if (angleRateOfChange > -10) {
                 angleRateOfChange -= 2;
             }
-
         }
-        else if (event.keyCode === 39)
-        {
+        else if (event.keyCode === 39) {
             //  right
             if (angleRateOfChange < 10) {
                 angleRateOfChange += 2;
             }
-        }
-        else if (event.keyCode === 38)
-        {
+        }*/
+        if (event.keyCode === 38) {
             //  up
-            biker.angle += angleRateOfChange;
 
-            biker.x += Math.sin(biker.angle*3.1415/180)*10;
-            biker.y -= Math.cos(biker.angle*3.1415/180)*10;
-
-            var line = new Phaser.Geom.Line(previousX, previousY, biker.x, biker.y);
-            graphics.strokeLineShape(line);
-
-            previousX = biker.x;
-            previousY = biker.y;
         }
-        else if (event.keyCode === 40)
-        {
+        else if (event.keyCode === 40) {
             //  down
             //biker.y += 10;
         }
@@ -81,4 +83,28 @@ function create ()
 function update()
 {
 
+    if (upArrowKey.isDown){
+        biker.angle += angleRateOfChange;
+
+        biker.x += Math.sin(biker.angle*3.1415/180);
+        biker.y -= Math.cos(biker.angle*3.1415/180);
+
+        var line = new Phaser.Geom.Line(previousX, previousY, biker.x, biker.y);
+        graphics.strokeLineShape(line);
+
+        previousX = biker.x;
+        previousY = biker.y;
+    }
+    if (leftArrowKey.isDown)
+    {
+        if (angleRateOfChange > -1) {
+            angleRateOfChange -= .2;
+        }
+    }
+    if (rightArrowKey.isDown)
+    {
+        if (angleRateOfChange < 1) {
+            angleRateOfChange += .2;
+        }
+    }
 }

@@ -81,11 +81,11 @@ function update()
                 bikerSpeed -= .001
             }
             
-            if (angleRateOfChange > -5 && angleRateOfChange < 0) {
-                angleRateOfChange += .001*(1/bikerSpeed);
+            if (angleRateOfChange < 0) {
+                angleRateOfChange += .001/bikerSpeed;
             }
-            if (angleRateOfChange < 5 && angleRateOfChange > 0){
-                angleRateOfChange -= .001*(1/bikerSpeed);
+            if (angleRateOfChange > 0){
+                angleRateOfChange -= .001/bikerSpeed;
             }
             
         }
@@ -104,7 +104,7 @@ function update()
         //update biker position based on speed
         if (bikerSpeed > 0){
             biker.angle += angleRateOfChange*bikerSpeed;
-        }
+
 
         biker.x += Math.sin(biker.angle*3.1415/180)*bikerSpeed;
         biker.y -= Math.cos(biker.angle*3.1415/180)*bikerSpeed;
@@ -114,7 +114,6 @@ function update()
 
         previousX = biker.x;
         previousY = biker.y;
-
-
+        }
     }
 }

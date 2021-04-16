@@ -78,16 +78,15 @@ function update()
         else {
             //decelearate
             if(bikerSpeed > 0){
-                bikerSpeed -= .001
+                bikerSpeed -= .001;
+
+                if (angleRateOfChange < 0) {
+                    angleRateOfChange += .001/bikerSpeed;
+                }
+                if (angleRateOfChange > 0){
+                    angleRateOfChange -= .001/bikerSpeed;
+                }
             }
-            
-            if (angleRateOfChange < 0) {
-                angleRateOfChange += .001/bikerSpeed;
-            }
-            if (angleRateOfChange > 0){
-                angleRateOfChange -= .001/bikerSpeed;
-            }
-            
         }
         if (leftArrowKey.isDown) {
             if (angleRateOfChange > -1.5) {
@@ -115,5 +114,6 @@ function update()
         previousX = biker.x;
         previousY = biker.y;
         }
+ 
     }
 }

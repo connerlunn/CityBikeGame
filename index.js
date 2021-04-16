@@ -64,28 +64,28 @@ function create ()
 
 }
 
-function update()
+function update(time, delta)
 {
     if (gameHasStarted) {
         text.text = "Angle: " + Math.round(biker.angle) + "   // AngleRateOfChange: " + Math.round(angleRateOfChange);
 
         if (upArrowKey.isDown) {
-            if(bikerSpeed < 1){
-                bikerSpeed += .001
+            if(bikerSpeed < 2){
+                bikerSpeed += .001*delta/5
             }
 
         }
         else {
             //decelearate
             if(bikerSpeed > 0){
-                bikerSpeed -= .001;
+                bikerSpeed -= .001*delta/5;
 
                 //straighten out player as they slow down
                 if (angleRateOfChange < 0) {
-                    angleRateOfChange += .001/(bikerSpeed+.1);
+                    angleRateOfChange += .01/(bikerSpeed+.1);
                 }
                 if (angleRateOfChange > 0){
-                    angleRateOfChange -= .001/(bikerSpeed+.1);
+                    angleRateOfChange -= .01/(bikerSpeed+.1);
                 }
             }
         }
@@ -104,10 +104,10 @@ function update()
         //update biker position based on speed
         if (bikerSpeed > 0){
         
-            biker.angle += angleRateOfChange*bikerSpeed;
+            biker.angle += angleRateOfChange*bikerSpeed*delta/10;
 
-            biker.x += Math.sin(biker.angle*3.1415/180)*bikerSpeed;
-            biker.y -= Math.cos(biker.angle*3.1415/180)*bikerSpeed;
+            biker.x += Math.sin(biker.angle*3.1415/180)*bikerSpeed*delta/10;
+            biker.y -= Math.cos(biker.angle*3.1415/180)*bikerSpeed*delta/10;
 
             var line = new Phaser.Geom.Line(previousX, previousY, biker.x, biker.y);
             graphics.strokeLineShape(line);

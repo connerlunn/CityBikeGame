@@ -44,44 +44,17 @@ function create ()
     biker = this.physics.add.image(200, 200, 'biker');
     biker.setCollideWorldBounds(true);
 
-    text = this.add.text(0, 0, '', { font: '"Arial"' });
+    text = this.add.text(0, 0, 'Use Arrow Keys to Move', { font: '"Arial"' });
     graphics = this.add.graphics({ lineStyle: { width: 4, color: 0xaa00aa } });
 
     previousX = biker.x;
     previousY = biker.y;
-
-    this.input.keyboard.on('keyup', function (event) {
-
-        text.text = "Angle: " + Math.round(biker.angle) + "   // AngleRateOfChange: " + angleRateOfChange;
-
-
-        /*
-        if (event.keyCode === 37) {
-            //  left
-            if (angleRateOfChange > -10) {
-                angleRateOfChange -= 2;
-            }
-        }
-        else if (event.keyCode === 39) {
-            //  right
-            if (angleRateOfChange < 10) {
-                angleRateOfChange += 2;
-            }
-        }*/
-        if (event.keyCode === 38) {
-            //  up
-
-        }
-        else if (event.keyCode === 40) {
-            //  down
-            //biker.y += 10;
-        }
-    });
 }
 
 
 function update()
 {
+    text.text = "Angle: " + Math.round(biker.angle) + "   // AngleRateOfChange: " + angleRateOfChange;
 
     if (upArrowKey.isDown){
         biker.angle += angleRateOfChange;
@@ -97,14 +70,14 @@ function update()
     }
     if (leftArrowKey.isDown)
     {
-        if (angleRateOfChange > -1) {
-            angleRateOfChange -= .2;
+        if (angleRateOfChange > -1.5) {
+            angleRateOfChange -= .05;
         }
     }
     if (rightArrowKey.isDown)
     {
-        if (angleRateOfChange < 1) {
-            angleRateOfChange += .2;
+        if (angleRateOfChange < 1.5) {
+            angleRateOfChange += .05;
         }
     }
 }

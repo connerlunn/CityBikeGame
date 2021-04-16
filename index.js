@@ -67,37 +67,37 @@ function create ()
 function update(time, delta)
 {
     if (gameHasStarted) {
-        text.text = "Angle: " + Math.round(biker.angle) + "   // AngleRateOfChange: " + Math.round(angleRateOfChange);
+        text.text = "Angle: " + Math.round(biker.angle) + "   // AngleRateOfChange: " + Math.round(angleRateOfChange) + "    // Speed: " + Math.round(bikerSpeed, 2);
 
         if (upArrowKey.isDown) {
             if(bikerSpeed < 2){
-                bikerSpeed += .001*delta/5
+                bikerSpeed += .0002*delta;
             }
 
         }
         else {
             //decelearate
             if(bikerSpeed > 0){
-                bikerSpeed -= .001*delta/5;
+                bikerSpeed -= .0002*delta;
 
                 //straighten out player as they slow down
                 if (angleRateOfChange < 0) {
-                    angleRateOfChange += .01/(bikerSpeed+.1);
+                    angleRateOfChange += .002*delta/(bikerSpeed+.1);
                 }
                 if (angleRateOfChange > 0){
-                    angleRateOfChange -= .01/(bikerSpeed+.1);
+                    angleRateOfChange -= .002*delta/(bikerSpeed+.1);
                 }
             }
         }
         if (leftArrowKey.isDown) {
             if (angleRateOfChange > -1.5) {
-                angleRateOfChange -= .05;
+                angleRateOfChange -= .005*delta;
             }
         }
         if (rightArrowKey.isDown)
         {
             if (angleRateOfChange < 1.5) {
-                angleRateOfChange += .05;
+                angleRateOfChange += .005*delta;
             }
         }
 

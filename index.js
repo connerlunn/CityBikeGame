@@ -80,11 +80,12 @@ function update()
             if(bikerSpeed > 0){
                 bikerSpeed -= .001;
 
+                //straighten out player as they slow down
                 if (angleRateOfChange < 0) {
-                    angleRateOfChange += .001/bikerSpeed;
+                    angleRateOfChange += .001/(bikerSpeed+.1);
                 }
                 if (angleRateOfChange > 0){
-                    angleRateOfChange -= .001/bikerSpeed;
+                    angleRateOfChange -= .001/(bikerSpeed+.1);
                 }
             }
         }
@@ -102,18 +103,17 @@ function update()
 
         //update biker position based on speed
         if (bikerSpeed > 0){
+        
             biker.angle += angleRateOfChange*bikerSpeed;
 
+            biker.x += Math.sin(biker.angle*3.1415/180)*bikerSpeed;
+            biker.y -= Math.cos(biker.angle*3.1415/180)*bikerSpeed;
 
-        biker.x += Math.sin(biker.angle*3.1415/180)*bikerSpeed;
-        biker.y -= Math.cos(biker.angle*3.1415/180)*bikerSpeed;
+            var line = new Phaser.Geom.Line(previousX, previousY, biker.x, biker.y);
+            graphics.strokeLineShape(line);
 
-        var line = new Phaser.Geom.Line(previousX, previousY, biker.x, biker.y);
-        graphics.strokeLineShape(line);
-
-        previousX = biker.x;
-        previousY = biker.y;
+            previousX = biker.x;
+            previousY = biker.y;
         }
- 
     }
 }

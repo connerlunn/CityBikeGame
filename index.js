@@ -34,6 +34,8 @@ var text;
 var previousX;
 var previousY;
 
+var bikerSpeed = 0;
+
 var gameHasStarted = false;
 
 function create ()
@@ -62,26 +64,32 @@ function create ()
 
 }
 
-
 function update()
 {
     if (gameHasStarted) {
         text.text = "Angle: " + Math.round(biker.angle) + "   // AngleRateOfChange: " + Math.round(angleRateOfChange);
 
-        if (upArrowKey.isDown){
-            biker.angle += angleRateOfChange;
+        if (upArrowKey.isDown) {
+            if(bikerSpeed < 1){
+                bikerSpeed += .001
+            }
 
-            biker.x += Math.sin(biker.angle*3.1415/180);
-            biker.y -= Math.cos(biker.angle*3.1415/180);
-
-            var line = new Phaser.Geom.Line(previousX, previousY, biker.x, biker.y);
-            graphics.strokeLineShape(line);
-
-            previousX = biker.x;
-            previousY = biker.y;
         }
-        if (leftArrowKey.isDown)
-        {
+        else {
+            //decelearate
+            if(bikerSpeed > 0){
+                bikerSpeed -= .001
+            }
+            
+            if (angleRateOfChange > -5 && angleRateOfChange < 0) {
+                angleRateOfChange += .001*(1/bikerSpeed);
+            }
+            if (angleRateOfChange < 5 && angleRateOfChange > 0){
+                angleRateOfChange -= .001*(1/bikerSpeed);
+            }
+            
+        }
+        if (leftArrowKey.isDown) {
             if (angleRateOfChange > -1.5) {
                 angleRateOfChange -= .05;
             }
@@ -92,5 +100,21 @@ function update()
                 angleRateOfChange += .05;
             }
         }
+
+        //update biker position based on speed
+        if (bikerSpeed > 0){
+            biker.angle += angleRateOfChange*bikerSpeed;
+        }
+
+        biker.x += Math.sin(biker.angle*3.1415/180)*bikerSpeed;
+        biker.y -= Math.cos(biker.angle*3.1415/180)*bikerSpeed;
+
+        var line = new Phaser.Geom.Line(previousX, previousY, biker.x, biker.y);
+        graphics.strokeLineShape(line);
+
+        previousX = biker.x;
+        previousY = biker.y;
+
+
     }
 }

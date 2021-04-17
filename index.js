@@ -1,7 +1,7 @@
 var config = {
     type: Phaser.AUTO,
-    width: 400,
-    height: 400,
+    width: 800,
+    height: 600,
     physics: {
         default: 'arcade',
         arcade: {
@@ -47,6 +47,10 @@ function create ()
     text = this.add.text(0, 0, 'Up Arrow to Accelerate.\nLeft and Right Arrows to turn. \nPress any arrow key to start. ', { font: '"Arial"' });
     graphics = this.add.graphics({ lineStyle: { width: 4, color: 0xaa00aa } });
 
+
+    var camera = this.cameras.main;
+    camera.setBounds(0, 0, 800, 600);
+    //camera.setSize(200, 200);
     var Physics = this.physics;
 
     this.input.keyboard.on('keyup', function (event) {
@@ -54,7 +58,8 @@ function create ()
         {
             biker = Physics.add.image(200, 200, 'biker');
             biker.setCollideWorldBounds(true);
-
+            camera.startFollow(biker);
+            camera.setZoom(2.5);
             previousX = biker.x;
             previousY = biker.y;
         

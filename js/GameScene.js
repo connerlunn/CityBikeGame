@@ -23,7 +23,9 @@ export default class GameScene extends Phaser.Scene
     {
         this.load.image('biker', './assets/sprites/bikerv1.png');
         this.load.image('straightRoad', './assets/sprites/straightRoad.png');
-        this.load.image('curveRoad', './assets/sprites/curveRoad.png')
+        this.load.image('curveRoad', './assets/sprites/curveRoad.png');
+        this.load.image('endCapRoad', './assets/sprites/endCapRoad.png');
+        this.load.image('finishRoad', './assets/sprites/finishRoad.png')
     }
 
     create(){

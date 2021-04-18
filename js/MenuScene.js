@@ -5,7 +5,7 @@ export default class MenuScene extends Phaser.Scene
     }
 
     create(){
-        this.add.text(0, 0, 'Up Arrow to Accelerate.\nLeft and Right Arrows to turn. \nPress any arrow key to start. ', { font: '"Arial"' });
+        this.add.text(0, 0, 'Up Arrow to Accelerate.\nLeft and Right Arrows to turn. \nPress any arrow key to start. ', {fontSize: '32px'});
         var thisHolder = this;
 
         //Start game when player presses an arrow key;

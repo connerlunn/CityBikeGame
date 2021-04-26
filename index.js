@@ -3,13 +3,13 @@ import GameScene from './js/GameScene.js'
 
 var config = {
     type: Phaser.AUTO,
-    width: 800,
-    height: 600,
+    width: 640,
+    height: 960,
     scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH,
-        width: 800,
-        height: 600
+        width: 640,
+        height: 960
     },
     physics: {
         default: 'arcade',

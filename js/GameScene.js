@@ -5,15 +5,13 @@ export default class GameScene extends Phaser.Scene
     upArrowKey;
     rightArrowKey;
 
-    biker;
+    player;
 
     //graphics;
 
     //Physics values
-    previousX = 0;
-    previousY = 0;
     angleRateOfChange = 0;
-    bikerSpeed = 0;
+    playerSpeed = 0;
 
     constructor (){
         super('GameScene');
@@ -42,36 +40,34 @@ export default class GameScene extends Phaser.Scene
         //graphics = this.add.graphics({ lineStyle: { width: 4, color: 0xaa00aa } });
 
         //Setup Biker
-        this.biker = this.physics.add.image(200, 200, 'biker');
-        this.biker.setCollideWorldBounds(true);
-        this.previousX = this.biker.x;
-        this.previousY = this.biker.y;
+        this.player = this.physics.add.image(200, 200, 'biker');
+        this.player.setCollideWorldBounds(true);
 
         //Setup Camera
         var camera = this.cameras.main;
         camera.setBounds(0, 0, 800, 600);
-        camera.startFollow(this.biker);
+        camera.startFollow(this.player);
         camera.setZoom(4);
     }
 
     update(time, delta){
         if (this.upArrowKey.isDown) {
             //accelerate
-            if(this.bikerSpeed < 2){
-                this.bikerSpeed += .0002*delta;
+            if(this.playerSpeed < 2){
+                this.playerSpeed += .0002*delta;
             }
         }
         else {
             //decelearate
-            if(this.bikerSpeed > 0){
-                this.bikerSpeed -= .0002*delta;
+            if(this.playerSpeed > 0){
+                this.playerSpeed -= .0002*delta;
 
                 //straighten out player as they slow down
                 if (this.angleRateOfChange < 0) {
-                    this.angleRateOfChange += .002*delta/(this.bikerSpeed+.1);
+                    this.angleRateOfChange += .002*delta/(this.playerSpeed+.1);
                 }
                 if (this.angleRateOfChange > 0){
-                    this.angleRateOfChange -= .002*delta/(this.bikerSpeed+.1);
+                    this.angleRateOfChange -= .002*delta/(this.playerSpeed+.1);
                 }
             }
         }
@@ -88,19 +84,12 @@ export default class GameScene extends Phaser.Scene
         }
 
         //update biker position based on speed
-        if (this.bikerSpeed > 0){
+        if (this.playerSpeed > 0){
         
-            this.biker.angle += this.angleRateOfChange*this.bikerSpeed*delta/10;
+            this.player.angle += this.angleRateOfChange*this.playerSpeed*delta/10;
 
-            this.biker.x += Math.sin(this.biker.angle*3.1415/180)*this.bikerSpeed*delta/10;
-            this.biker.y -= Math.cos(this.biker.angle*3.1415/180)*this.bikerSpeed*delta/10;
-
-            //Draw line
-            //var line = new Phaser.Geom.Line(previousX, previousY, biker.x, biker.y);
-            //graphics.strokeLineShape(line);
-
-            this.previousX = this.biker.x;
-            this.previousY = this.biker.y;
+            this.player.x += Math.sin(this.player.angle*3.1415/180)*this.playerSpeed*delta/10;
+            this.player.y -= Math.cos(this.player.angle*3.1415/180)*this.playerSpeed*delta/10;
         }
     }
 }
